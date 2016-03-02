@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "markAsRead": true,
+  "accounts": [
+    {
+      "email": "xxxxxxx",
+      "password": "password",
+      "name": "personal",
+      "notifyNewEmails": true
+    }
+  ]
+}

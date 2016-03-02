@@ -1,0 +1,2 @@
+class JenniferUserWantsToCancelException(Exception):
+    pass

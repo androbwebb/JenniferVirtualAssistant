@@ -1,0 +1,31 @@
+env:
+  global:
+  - secure: K57ooXHX5A7upsyppg1kGKy2Av1l7qs5gDFdaU82MF0+EyJb576t1cSV0VF84S0K9GDXAoTCNTRIIobZ0IpYn17aHc5Vwld7eRb1pprJqAzH3RbboIPO4B6GJt480Oa3hUDQxzK6RI/Hh+r/bBBaTUCnPW7R/RXtpBoyb9X8QfaYYPDshFe8HwjSAtGYyyUmIDpfp8u9Tdhot7DAjkjzjVNnIKJ7CTu9qoRQnZgFclxblm1RBYiexyaxkHFm8i1sAKY8Dv492tT66O5v207KWnePH28UNY25L1MS2HEC4xdaJhcD4JsBNoOIhKdPiojNHOBU+eBEH894irJksnoeR14GBMkQIx/meQhkcQNjm6wmnBQHjMDEmSrlykV7E8EYGrgtEseI4d6NuWOukLfpTPjNzSXxaXHOC+OmN/U5Dt+HklA75HMrCggLBmncDrwW0KXp6mrLQeNruUhIebbDE2EewP+dZs9xr84Rq0J05jypp+CDYoM6cY9lHYzeyO9R5qZbCQ99diLQTicUMQIoYYN2QO0Kpx1UauAl3tYNc5RCKoSt5tZiNEWgoKyhWCnNjIunTbos+Ef5OYXJF/dMKYHDgYjc4yyyCHuJ7Zhr0VcaEbCPv1/Lr49WAOhbazOeDAp3RjOoALTYN5c5mtqHn1+BmQSx1Hmqg51Uw/g38Do=
+  - secure: sUBwjq93y1MhLmNpopFAf5l1F/7pR6O9+YoklTMhqzxaL/OhcnhZ4q9nE6MjJboUyD8W/gSzOFXdf5pQiSNamN+6SNouYNseVglBxHOUFWD/++RL1B3vkkJdOxSCv2jRW+qGY2SdJGomSxQbjbT2afvOKydmqjM4ngcn/600Pp/dpf/Btsyn0SL5KKZgPwO33zw5HXhIUjTImIzUEvXBCnyHb9ygd2F+qvf3JdGoi+gYV3ry2y9dxHymif/FkSp0767rsMbqAXMs2qOf/eqsIOVP1GkYEzngq81WTrn/03OS2On0GRH66aTyI0bHJynhVOR+rLN/Vx3OCP7Ty/fF2Dzq7KXAGtcC2GGOB6DTJCXgstO0pkjRaWo2I4PV6XJZ4FYVnvHv9WAQAMYPPOWSq+pIbiybGl73S7s5r1d8lcXVM8sQAv2en1l9dWUApaiTppM3IqZe6dL9xYdBs38q1k1SKverADP18icQTSjMmHdEoR0FGhbifIQZRneje/TckMPAbAdmQrv2/G9x7kg3d/tBEdTUC3/HMQIN1crz2Ps64FNjmnG5e8e5gL95/sv/zSk3UpTRFJrbanbYi9YIsitD7+FgJWmrBEFJuKHcozoCn+BX1uCbyywUxDqBVCrdb8fnnN7YbKcVL6CrUf4aE/bA8mXCO96XvGrIzkSXcMo=
+language: python
+python:
+- '2.7'
+cache:
+  directories:
+  - /home/travis/virtualenv/python2.7
+install:
+- python install_requirements.py
+- pip install python-coveralls
+- pip install coverage
+- pip install nltk
+- pip install codacy-coverage
+- python -c "import nltk ; nltk.download(['abc', 'book_grammars', 'brown', 'cess_cat',
+  'cess_esp', 'chat80', 'city_database', 'comtrans', 'conll2000', 'conll2002', 'conll2007',
+  'cmudict', 'dependency_treebank', 'floresta', 'framenet_v15', 'genesis', 'gutenberg',
+  'ieer', 'inaugural', 'indian', 'jeita', 'knbc', 'large_grammars', 'machado', 'names',
+  'nps_chat', 'mac_morpho', 'maxent_treebank_pos_tagger', 'movie_reviews', 'ppattach',
+  'propbank', 'ptb', 'punkt', 'qc', 'reuters', 'rslp', 'rte', 'sample_grammars', 'senseval',
+  'semcor', 'shakespeare', 'sinica_treebank', 'state_union', 'stopwords', 'averaged_perceptron_tagger',
+  'timit', 'toolbox', 'treebank', 'udhr', 'universal_tagset', 'verbnet', 'webtext',
+  'wordnet', 'wordnet_ic', 'words'])"
+script:
+- coverage run -m unittest discover
+- coverage xml
+after_success:
+- coveralls
+- python-codacy-coverage -r coverage.xml

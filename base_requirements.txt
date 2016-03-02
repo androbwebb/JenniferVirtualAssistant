@@ -1,0 +1,12 @@
+# BASE Requirements
+cached-property==1.2.0
+nltk
+numpy
+parsedatetime
+simplejson
+git+https://github.com/pwdyson/inflect.py#egg=inflect
+html2text
+apscheduler
+pyglet
+semantic
+python-mpd2
