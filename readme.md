@@ -9,6 +9,13 @@
 Inspired by [Jasper Client](https://github.com/jasperproject/jasper-client) but built from scratch to be smarter and
 more powerful.
 
+## :checkered_flag: Goals & Reasons for building Jennifer
+- *MUCH* Less coupling between the brain & the client interface
+- Easier plugin interface
+- Better security between plugins
+- Simpler API
+- More efficient brain
+
 
 ## :speech_balloon: Responding Modules:
 Active modules that are triggered by input
