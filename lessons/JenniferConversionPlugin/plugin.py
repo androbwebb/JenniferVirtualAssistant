@@ -65,5 +65,5 @@ class JenniferTimePlugin(JenniferResponsePlugin):
             return self.respond(client=client, plain_text=plain_text, bail_if_exception=True)
         except ValueError:
             # Failure
-            client.give_output_string(self, "Sorry I can't {} to {}".format(units[0], units[1]))
+            client.give_output_string(self, "Sorry I can't convert {} to {}".format(units[0], units[1]))
             return
