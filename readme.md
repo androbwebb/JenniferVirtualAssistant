@@ -17,6 +17,15 @@ more powerful.
 - More efficient brain
 - Everything is testable
 
+## :floppy_disk: Installation
+Clone the repo: `git clone git@github.com:androbwebb/JenniferVirtualAssistant.git`
+
+CD into the folder `cd JenniferVirtualAssistant`
+
+Install Dependencies (Needs to be done every time a plugin is added) `python install_requirements.py`
+
+Run a test client with `python quick_run.py`
+
 
 ## :speech_balloon: Responding Modules:
 Active modules that are triggered by input
