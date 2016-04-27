@@ -95,7 +95,7 @@ SOFTWARE.
 SOUNDS: The sound files in `/ioclients/assets/` are under [Creative Commons 3 License](http://creativecommons.org/licenses/by/3.0/us/) thanks to [dev_tones](http://rcptones.com/dev_tones/)
 
 # :dancers: Contributing:
-I welcome all contributions as long as they adhear to the principals listed in the [Goals](https://github.com/androbwebb/JenniferVirtualAssistant#checkered_flag-goals--reasons-for-building-jennifer) section. If you contribute a client or plugin, expect to be tagged in future PR's that affect your code.
+I welcome all contributions as long as they adhere to the principals listed in the [Goals](https://github.com/androbwebb/JenniferVirtualAssistant#checkered_flag-goals--reasons-for-building-jennifer) section. If you contribute a client or plugin, expect to be tagged in future PR's that affect your code.
 
 # :ledger: API Guide
 
