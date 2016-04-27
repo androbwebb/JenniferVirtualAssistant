@@ -3,7 +3,7 @@ from server.brain import JenniferBrain
 from ioclients.terminal import JenniferTerminalClient
 from ioclients.terminal_with_sound import JenniferTerminalWithSoundClient
 
-brain = JenniferBrain()
+brain = JenniferBrain(allow_network_plugins=True)
 client = JenniferTerminalClient(brain)
 client.run()
 

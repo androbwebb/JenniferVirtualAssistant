@@ -16,4 +16,5 @@ with open(local_txt_file, 'w+') as output_file:
     with open(requirements_base, 'r') as input_file:
         output_file.write(input_file.read())
 
+# os.system("easy_install install pip")
 os.system("pip install -r {}".format(local_txt_file))
