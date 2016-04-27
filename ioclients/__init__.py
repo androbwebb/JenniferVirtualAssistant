@@ -34,7 +34,7 @@ class JenniferClientSupportsResponders(JenniferClientBase):
     def __init__(self, brain):
         self.run_forever = 1
         self.brain = brain
-        self.run()
+        # self.run()
 
     @abstractmethod
     def collect_input(self):

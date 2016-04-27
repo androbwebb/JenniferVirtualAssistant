@@ -138,23 +138,25 @@ class JenniferGmailPlugin(JenniferResponsePlugin, JenniferGmailSharedSettings):
         client.give_output_string(self, "You have {} new {}".format(unread_count,
                                                                     self.pluralize_engine.plural('email', unread_count)))
 
-        # Iterate over them with subjects (marking as read)
-        emails = imap.get_unread_emails(10)
-        for email_uid, email_msg in emails:
-            from_email = email.utils.parseaddr(email_msg['From'])
-            subject = email_msg['Subject']
-            client.give_output_string(self, "Email from {}. Subject: {}".format(from_email[0] or from_email[1], subject))
+        if unread_count > 3:
+            if client.confirm(self, "Want me to read them all?", ['read']):
+                # Iterate over them with subjects (marking as read)
+                emails = imap.get_unread_emails(10)
+                for email_uid, email_msg in emails:
+                    from_email = email.utils.parseaddr(email_msg['From'])
+                    subject = email_msg['Subject']
+                    client.give_output_string(self, "Email from {}. Subject: {}".format(from_email[0] or from_email[1], subject))
 
-            # Should we read the body?
-            if client.confirm(self, "Want me to read it?", ['read']):
-                client.give_output_string(self, "It says:")
-                client.give_output_string(self, JenniferHtmlResponseSegment(imap.get_first_text_block(email_msg)))
-                imap.read_message(email_uid)
+                    # Should we read the body?
+                    if client.confirm(self, "Want me to read it?", ['read']):
+                        client.give_output_string(self, "It says:")
+                        client.give_output_string(self, JenniferHtmlResponseSegment(imap.get_first_text_block(email_msg)))
+                        imap.read_message(email_uid)
 
-            # Should we delete it?
-            if client.confirm(self, "Should I delete it?", ['read']):
-                client.give_output_string(self, "Deleted")
-                imap.delete_message(email_uid)
+                    # Should we delete it?
+                    if client.confirm(self, "Should I delete it?", ['read']):
+                        client.give_output_string(self, "Deleted")
+                        imap.delete_message(email_uid)
 
     def respond_count(self, account, **kwargs):
         imap = GmailImapWrapper(account['email'], account['password'], self.settings['markAsRead'])
@@ -171,10 +173,10 @@ class JenniferGmailPlugin(JenniferResponsePlugin, JenniferGmailSharedSettings):
 
 class JenniferGmailNotifierPlugin(JenniferNotificationPlugin, JenniferGmailSharedSettings):
     """
-    A notification plugin. Checks for unread emails every two minutes and announces it.
+    A notification plugin. Checks for unread emails every minute and announces it.
     """
 
-    RUN_EVERY_N_SECONDS = 60 * 2  # two minutes
+    RUN_EVERY_N_SECONDS = 60 * 1  # one minute
     PRIORITY = 10
     REQUIRES_NETWORK = True
 

@@ -4,7 +4,7 @@ from ioclients.terminal import JenniferTerminalClient
 from ioclients.terminal_with_sound import JenniferTerminalWithSoundClient
 
 brain = JenniferBrain(allow_network_plugins=True)
-client = JenniferTerminalClient(brain)
+client = JenniferTerminalWithSoundClient(brain)
 client.run()
 
 """

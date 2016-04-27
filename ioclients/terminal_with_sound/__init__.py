@@ -16,6 +16,10 @@ class JenniferTerminalWithSoundClient(JenniferTerminalClient):
     def _off_beep_file(self):
         return os.path.join(os.path.dirname(__file__), '..', 'assets', 'beep_short_off.wav')
 
+    @property
+    def _notification_beep_file(self):
+        return os.path.join(os.path.dirname(__file__), '..', 'assets', 'chime_bell_ding.wav')
+
     @staticmethod
     def play_sound(sound_file):
         if os.path.isfile(sound_file):
@@ -34,3 +38,9 @@ class JenniferTerminalWithSoundClient(JenniferTerminalClient):
         JenniferTerminalClient.give_output(self, response_obj)
         response = response_obj.to_text()
         os.system('say "{}"'.format(response))
+
+    def new_notification(self):
+        """Called whenever a new notification has been pushed into the queue"""
+        self.play_sound(self._notification_beep_file)
+        JenniferTerminalClient.new_notification(self)
+
