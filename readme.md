@@ -1,5 +1,5 @@
 # Jennifer
-###### An open source virtual Assistant
+###### An open source virtual Assistant (Only OSX is supported)
 > For those wondering why the first commit is so monolithic, it's because I erased the git history after removing a feature due to a cease and disist order.
 
 [![Build Status](https://travis-ci.org/androbwebb/JenniferVirtualAssistant.svg?branch=master)](https://travis-ci.org/androbwebb/JenniferVirtualAssistant)
