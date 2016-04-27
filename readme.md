@@ -27,6 +27,7 @@ Active modules that are triggered by input
 | **Find My iPhone** | [Here](https://github.com/androbwebb/JenniferVirtualAssistant/tree/master/lessons/JenniferFindMyIphonePlugin) | Jennifer can use the apple find my iphone API to make your iPhone ring |
 | **GMail** | [Here](https://github.com/androbwebb/JenniferVirtualAssistant/tree/master/lessons/JenniferGmailPlugin) | Jennifer will read new Gmail emails if you ask. |
 | **Conversions** | [Here](https://github.com/androbwebb/JenniferVirtualAssistant/tree/master/lessons/JenniferConversionPlugin) | Convert units of measurement |
+| **Instagram** | (In dev) | Read new instagram notifications if you ask |
 | **Facebook** | (In dev) | Jennifer will read new Facebook notifications if you ask. | |
 | **Yelp** | (Planned) | Jennifer can search yelp for restaurants and answer questions about them |  |
 | **Fandango** | (Planned) | Find out when movies are playing near you |
@@ -39,6 +40,7 @@ Passive modules that act similar to push notifications
 |      Name      |   Status   |         Description        |
 | -------------- | ---------- | -------------------------- |
 | **GMail** | [Here](https://github.com/androbwebb/JenniferVirtualAssistant/tree/master/lessons/JenniferGmailPlugin) | Jennifer will alert you when you have new gmail notifications. |
+| **Instagram** | (In dev) | Alert you of new instagram notifications |
 | **Facebook** | (In dev) | Jennifer will alert you when you have new facebook notifications. |
 | **CouchPotato** | (Planned) | Jennifer will alert you when new movies are downloaded with couch potato. |
 | **Alarm** | (Planned) | Jennifer can act as your alarm clock. |
