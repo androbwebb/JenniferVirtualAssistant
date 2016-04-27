@@ -15,6 +15,7 @@ more powerful.
 - Better security between plugins
 - Simpler API
 - More efficient brain
+- Everything is testable
 
 
 ## :speech_balloon: Responding Modules:
