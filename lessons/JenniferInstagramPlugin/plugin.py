@@ -1,5 +1,6 @@
 # -*- coding: utf-8-*-
 import inflect
+import instagram
 
 from lessons.base.plugin import JenniferResponsePlugin
 
@@ -48,3 +49,8 @@ class JenniferInstagramPlugin(JenniferResponsePlugin):
         plain_text = kwargs.get('plain_text')
         client = kwargs.get('client')
         client.give_output_string(self, "Checking instagram")
+
+        client_id = self.settings.get('Client ID')
+        access_to = self.settings.get('Access Token')
+
+        ig_api = instagram.InstagramAPI(client_id=client_id, access_token=access_to)
