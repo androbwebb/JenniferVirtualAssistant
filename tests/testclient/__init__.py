@@ -17,7 +17,6 @@ class JenniferTestClient(JenniferClientSupportsResponders):
         self.output_list = []
         self.debug = debug
         JenniferClientSupportsResponders.__init__(self, brain)
-        self.run()
 
     # Overriding some required methods (test client is a special case
     def collect_input(self):

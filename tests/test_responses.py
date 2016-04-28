@@ -20,6 +20,7 @@ class ClientTests(unittest.TestCase):
             "jashg asfsahf ashdf saf sd"
         ]
         client = JenniferTestClient(self.brain, inputs)
+        client.run()
 
         self.assertEqual(len(client.output_list), 1)
 
@@ -44,6 +45,7 @@ class ClientTests(unittest.TestCase):
             'yes'
         ]
         client = JenniferTestClient(self.brain, inputs)
+        client.run()
 
         # Should have said:
         #    Which lesson applies?
@@ -85,6 +87,7 @@ class ClientTests(unittest.TestCase):
             'what is the time'
         ]
         client = JenniferTestClient(self.brain, inputs)
+        client.run()
 
         # Should have just run the time, because it's higher priority
         self.assertEqual(len(client.output_list), 1)

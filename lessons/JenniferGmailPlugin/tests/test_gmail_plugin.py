@@ -31,6 +31,7 @@ class JenniferGmailPluginTests(unittest.TestCase):
             "count unread emails"
         ]
         client = JenniferTestClient(self.brain, inputs)
+        client.run()
 
         self.assertEqual(len(client.output_list), 2)
 
@@ -70,6 +71,7 @@ class JenniferGmailPluginTests(unittest.TestCase):
             "no", "no",  # Email 10
         ]
         client = JenniferTestClient(self.brain, inputs)
+        client.run()
 
         self.assertGreaterEqual(len(client.output_list), 1)
 
@@ -112,7 +114,8 @@ class JenniferGmailPluginTests(unittest.TestCase):
             "no", "no",   # Email 9
             "no", "no",   # Email 10
         ]
-        JenniferTestClient(self.brain, inputs)
+        client = JenniferTestClient(self.brain, inputs)
+        client.run()
 
         self.assertTrue(delete_mock.called)
         self.assertTrue(read_mock.called)

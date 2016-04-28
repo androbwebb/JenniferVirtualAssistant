@@ -139,24 +139,26 @@ class JenniferGmailPlugin(JenniferResponsePlugin, JenniferGmailSharedSettings):
                                                                     self.pluralize_engine.plural('email', unread_count)))
 
         if unread_count > 3:
-            if client.confirm(self, "Want me to read them all?", ['read']):
-                # Iterate over them with subjects (marking as read)
-                emails = imap.get_unread_emails(10)
-                for email_uid, email_msg in emails:
-                    from_email = email.utils.parseaddr(email_msg['From'])
-                    subject = email_msg['Subject']
-                    client.give_output_string(self, "Email from {}. Subject: {}".format(from_email[0] or from_email[1], subject))
+            if not client.confirm(self, "Want me to read them all?", ['read']):
+                return
 
-                    # Should we read the body?
-                    if client.confirm(self, "Want me to read it?", ['read']):
-                        client.give_output_string(self, "It says:")
-                        client.give_output_string(self, JenniferHtmlResponseSegment(imap.get_first_text_block(email_msg)))
-                        imap.read_message(email_uid)
+        # Iterate over them with subjects (marking as read)
+        emails = imap.get_unread_emails(10)
+        for email_uid, email_msg in emails:
+            from_email = email.utils.parseaddr(email_msg['From'])
+            subject = email_msg['Subject']
+            client.give_output_string(self, "Email from {}. Subject: {}".format(from_email[0] or from_email[1], subject))
 
-                    # Should we delete it?
-                    if client.confirm(self, "Should I delete it?", ['read']):
-                        client.give_output_string(self, "Deleted")
-                        imap.delete_message(email_uid)
+            # Should we read the body?
+            if client.confirm(self, "Want me to read it?", ['read']):
+                client.give_output_string(self, "It says:")
+                client.give_output_string(self, JenniferHtmlResponseSegment(imap.get_first_text_block(email_msg)))
+                imap.read_message(email_uid)
+
+            # Should we delete it?
+            if client.confirm(self, "Should I delete it?", ['read']):
+                client.give_output_string(self, "Deleted")
+                imap.delete_message(email_uid)
 
     def respond_count(self, account, **kwargs):
         imap = GmailImapWrapper(account['email'], account['password'], self.settings['markAsRead'])
