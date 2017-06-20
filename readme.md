@@ -127,7 +127,7 @@ For example, `JenniferGmailPlugin` brings 3 functions:
 
 
 
-      Type    |             Class            |  Description  |
+|      Type    |             Class            |  Description  |
 |:------------:|:----------------------------:| ------------- |
 |    Response  |   `JenniferResponsePlugin`   | A plugin that responds when triggered by a set of commands: examples: `JenniferTimePlugin`, `JenniferFindMyIphonePlugin`)
 | Notification | `JenniferNotificationPlugin` | A wrapper for a background task. Upon initiation, creates a task that runs on an interval or at a specified time. Examples: `JenniferGmailNotificationPlugin`
