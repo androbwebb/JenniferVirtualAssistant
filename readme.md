@@ -141,7 +141,7 @@ All response plugins must implement at least three things:
 
 | kwarg | Info |
 | --- | --- |
-| `tags` | a set of [NLTK](https://github.com/nltk/nltk) parsed tags. Each word is matches with it's best guess part of speech.|
+| `tags` | a set of [NLTK](https://github.com/nltk/nltk) parsed tags. Each word is matched with it's best guess part of speech.|
 | `plain_text` | the plain text that was given from the client |
 | `client`|- the client currently running. |
 | `brain` | the brain. likely won't be used.. might be deprecated later. |
