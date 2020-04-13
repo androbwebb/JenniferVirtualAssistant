@@ -84,8 +84,8 @@ class JenniferBrain(object):
         Load the profile
         :return:
         """
-        with open(self.profile_file, 'r+') as profile_file:
-            try:
+        try:
+            with open(self.profile_file, 'r+') as profile_file:
                 contents = profile_file.read()
                 print(contents)
                 data = json.loads(contents, strict=False)
@@ -93,10 +93,10 @@ class JenniferBrain(object):
                 if 'profile' in self.database and 'settings' in self.database:
                     profile_file.close()
                     return
-            except (IOError, ValueError, JSONDecodeError) as e:
-                self.database = {}
-                self._init_profile()
-                self._save_profile_to_file()
+        except (IOError, ValueError, JSONDecodeError) as e:
+            self.database = {}
+            self._init_profile()
+            self._save_profile_to_file()
 
     def _get_settings_for_lesson(self, lesson, lesson_name=None):
         """
