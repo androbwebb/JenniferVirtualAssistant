@@ -22,6 +22,13 @@ Clone the repo: `git clone git@github.com:androbwebb/JenniferVirtualAssistant.gi
 
 CD into the folder `cd JenniferVirtualAssistant`
 
+Make sure you're using python 3.6+
+
+```
+python --version
+Python 3.7.6
+```
+
 Install Dependencies (Needs to be done every time a plugin is added) `python install_requirements.py`
 
 Run a test client with `python quick_run.py`
