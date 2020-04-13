@@ -1,6 +1,5 @@
 # Jennifer
 ###### An open source virtual Assistant (Only OSX is supported)
-> For those wondering why the first commit is so monolithic, it's because I erased the git history after removing a feature due to a cease and disist order. (Hitting a private API)
 
 [![Build Status](https://travis-ci.org/androbwebb/JenniferVirtualAssistant.svg?branch=master)](https://travis-ci.org/androbwebb/JenniferVirtualAssistant)
 [![Codacy Badge](https://api.codacy.com/project/badge/coverage/e3604515bed64b77a0638392bd75fdf5)](https://www.codacy.com/app/awebb/JenniferVirtualAssistant)
