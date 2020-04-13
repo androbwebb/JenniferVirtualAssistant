@@ -55,7 +55,7 @@ class JenniferTimePlugin(JenniferResponsePlugin):
             ])
         elif JenniferTimePlugin.is_asking_for_date(tags):
             # Could be asking "what was the date _____", "what is the date", "what is the date _____", let's parse
-            possible_dates = semantic.dates.extractDates(plain_text)
+            possible_dates = list(semantic.dates.extractDates(plain_text))
 
             def time_format(dt_obj):
                 inflect_eng = inflect.engine()
@@ -68,7 +68,7 @@ class JenniferTimePlugin(JenniferResponsePlugin):
             else:
                 # See if they specified a day?
                 the_time = possible_dates[0]
-                response = "{}".format(time_format(the_time))
+                response = f'{time_format(the_time)}'
 
             return JenniferResponse(self, [
                 JenniferTextResponseSegment(response)
