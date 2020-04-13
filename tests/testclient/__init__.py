@@ -23,14 +23,14 @@ class JenniferTestClient(JenniferClientSupportsResponders):
         try:
             popped = self.input_list.pop(0)
             if self.debug:
-                print "INPUT: {}".format(popped)
+                print(f'INPUT: {popped}')
             return popped
         except IndexError:
-            raise Exception("Prompted for input: \"{}\", but no input found".format(self.output_list[-1].to_text()))
+            raise Exception(f'Prompted for input: \"{self.output_list[-1].to_text()}\", but no input found')
 
     def give_output(self, response_obj):
         if self.debug:
-            print "OUTPUT: {}".format(response_obj.to_text())
+            print(f'OUTPUT: {response_obj.to_text()}')
         self.output_list.append(response_obj)
 
     def run(self):

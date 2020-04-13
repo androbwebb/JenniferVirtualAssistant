@@ -1,2 +1,2 @@
 #jennifer_iphone
-pyicloud
+pyicloud==0.9.6.1

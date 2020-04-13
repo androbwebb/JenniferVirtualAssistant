@@ -15,11 +15,11 @@ class JenniferTerminalClient(JenniferClientSupportsNotification, JenniferClientS
         JenniferClientSupportsResponders.__init__(self, brain)
 
     def collect_input(self):
-        return raw_input(self.prompt)
+        return input(self.prompt)
 
     def give_output(self, response_obj):
         response = response_obj.to_text()
-        print "JENNIFER: {}".format(response)
+        print(f'JENNIFER: {response}')
 
     def regain_control(self):
         self.prompt = '> '

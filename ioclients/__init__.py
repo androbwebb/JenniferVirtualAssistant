@@ -1,4 +1,4 @@
-import Queue
+import queue
 import mpd
 
 from abc import abstractmethod, abstractproperty
@@ -20,12 +20,12 @@ class JenniferClientBase(object):
         pass
 
     def give_output_string(self, creator, text):
-        if isinstance(text, (str, unicode)):
+        if isinstance(text, str):
             response_obj = JenniferResponse(creator, [JenniferTextResponseSegment(text)])
         elif issubclass(text.__class__, JenniferResponseAbstractSegment):
             response_obj = JenniferResponse(creator, [text])
         else:
-            raise Exception("client.give_output_string must receive a string/unicode or instance of JenniferResponseAbstractSegment")
+            raise Exception("client.give_output_string must receive a string or instance of JenniferResponseAbstractSegment")
         return self.give_output(response_obj)
 
 
@@ -106,7 +106,7 @@ class JenniferClientSupportsResponders(JenniferClientBase):
 class JenniferClientSupportsNotification(JenniferClientBase):
 
     def __init__(self, brain):
-        self.notifications = Queue.PriorityQueue()
+        self.notifications = queue.PriorityQueue()
         self.brain = brain
         self.brain.register_notification_client(self)
 

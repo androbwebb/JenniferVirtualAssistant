@@ -22,7 +22,7 @@ class JenniferResponse(object):
             func = 'to_dict'
             return [getattr(segment, func) for segment in self.segments]
         else:
-            raise Exception("Attempting to format {} object to a non-implemented format".format(self.__class__))
+            raise Exception(f'Attempting to format {self.__class__} object to a non-implemented format')
 
         return " ".join([getattr(segment, func) for segment in self.segments])
 
@@ -70,7 +70,7 @@ class JenniferTextResponseSegment(JenniferResponseAbstractSegment):
     @property
     def to_text(self):
         try:
-            return unicode(self.text)
+            return str(self.text)
         except UnicodeDecodeError:
             # http://stackoverflow.com/questions/4237898/unicodedecodeerror-ascii-codec-cant-decode-byte-0xe0-in-position-0-ordinal
             return ""
@@ -110,7 +110,7 @@ class JenniferLinkResponseSegement(JenniferTextResponseSegment):
 
     @property
     def to_text(self):
-        return unicode(self.link)
+        return self.link
 
 
 class JenniferHtmlResponseSegment(JenniferResponseAbstractSegment):

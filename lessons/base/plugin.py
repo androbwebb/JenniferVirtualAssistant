@@ -1,4 +1,4 @@
-import Queue
+import queue
 import os
 import atexit
 import inspect
@@ -42,21 +42,21 @@ class JenniferPluginBase(object):
         :return: return the new settings dict to be saved
         """
 
-        for key, val in settings_template_dict.iteritems():
+        for key, val in settings_template_dict.items():
             # Ignore enabled
             if key == 'enabled':
                 continue
 
-            print "Please provide a {}".format(key)
+            print(f'Please provide a {key}')
             if val != "password":
-                new_value = raw_input("> ")
+                new_value = input("> ")
             else:
                 new_value = getpass("> ")
 
             if isinstance(val, bool):
                 settings_template_dict[key] = new_value.lower() == 'true'
-            if isinstance(val, (str, unicode)):
-                settings_template_dict[key] = unicode(new_value)
+            if isinstance(val, str):
+                settings_template_dict[key] = new_value.__str__()
             if isinstance(val, int):
                 settings_template_dict[key] = int(new_value)
             if isinstance(val, float):
@@ -151,7 +151,7 @@ class JenniferNotificationPlugin(JenniferPluginBase):
 
     def __init__(self, brain, settings=None, profile=None):
         JenniferPluginBase.__init__(self, brain, profile, settings)
-        self.queue = Queue.PriorityQueue()
+        self.queue = queue.PriorityQueue()
         self.create_scheduled_job()
 
     @abstractmethod

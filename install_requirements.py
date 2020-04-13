@@ -4,6 +4,14 @@ import os
 
 requirements_base = os.path.join(os.path.dirname(__file__), 'base_requirements.txt')
 local_txt_file = os.path.join(os.path.dirname(__file__), 'requirements.txt')
+required_nltk_packages = ['averaged_perceptron_tagger', 'punkt']
+
+def install_nltk():
+    import nltk
+    for pk in required_nltk_packages:
+        print('downloading required nltk package:', pk)
+        nltk.download(pk)
+
 
 with open(local_txt_file, 'w+') as output_file:
     for filename in glob.iglob('lessons/**/requirements.txt'):
@@ -18,3 +26,5 @@ with open(local_txt_file, 'w+') as output_file:
 
 # os.system("easy_install install pip")
 os.system("pip install -r {}".format(local_txt_file))
+install_nltk();
+

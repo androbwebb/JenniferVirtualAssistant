@@ -10,7 +10,7 @@ from lessons.JenniferGmailPlugin.logic import GmailImapWrapper
 from lessons.JenniferGmailPlugin.shared_settings import JenniferGmailSharedSettings
 
 
-class JenniferGmailPlugin(JenniferResponsePlugin, JenniferGmailSharedSettings):
+class JenniferGmailPlugin(JenniferGmailSharedSettings, JenniferResponsePlugin):
 
     PRIORITY = 50
     VERBOSE_NAME = "Gmail"
@@ -227,7 +227,7 @@ class JenniferGmailNotifierPlugin(JenniferNotificationPlugin, JenniferGmailShare
         :return:
         """
         self.update_number_new_emails()
-        for account_name, count in self.number_new_emails.iteritems():
+        for account_name, count in self.number_new_emails.items():
             try:
                 new_count = count - self.number_emails_announced.setdefault(account_name, 0)
                 if new_count > 0:

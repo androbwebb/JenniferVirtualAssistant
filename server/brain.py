@@ -3,13 +3,14 @@ import json
 import atexit
 import nltk
 import pkgutil
-import Queue
+import queue
 import random
 import logging
 from pytz import common_timezones, timezone
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from nltk.tag.perceptron import PerceptronTagger
+from json.decoder import JSONDecodeError
 
 from lessons.base.plugin import JenniferResponsePlugin, JenniferNotificationPlugin
 from lessons.base.responses import JenniferResponse, JenniferTextResponseSegment
@@ -30,7 +31,7 @@ class JenniferBrain(object):
         self.always_allow_plugins = always_allow_plugins or []
         self.responders = []
         self.notifiers = []
-        self.notification_queue = Queue.PriorityQueue()
+        self.notification_queue = queue.PriorityQueue()
         self._load_profile_and_settings()
 
         # Requires self.database & self.settings
@@ -50,6 +51,10 @@ class JenniferBrain(object):
         self.profile_file = os.path.join(self.base_path, 'profile.json')
         self.lessons_path = os.path.join(self.base_path, 'lessons')
 
+        if not os.path.exists(self.profile_file):
+            with open(self.profile_file, 'w') as fp:
+                fp.write('')
+
     def _load_lessons(self):
         """
         Search the lessons/ package for lessons & store them in sorted order by priority
@@ -57,7 +62,7 @@ class JenniferBrain(object):
         """
         pkgs = [n for _, n, _ in pkgutil.iter_modules(['lessons']) if n != 'base']
         for name in pkgs:
-            exec 'import lessons.' + name + '.plugin'
+            exec(f'import lessons.{name}.plugin')
 
         responders = [cls(self).set_profile(self.database['profile']) for cls in JenniferResponsePlugin.__subclasses__() if self._is_lesson_allowed(cls)]
         self.notifiers = [cls(self).set_profile(self.database['profile']) for cls in JenniferNotificationPlugin.__subclasses__() if self._is_lesson_allowed(cls)]
@@ -79,17 +84,19 @@ class JenniferBrain(object):
         Load the profile
         :return:
         """
-        try:
-            with open(self.profile_file, 'r+') as profile_file:
-                data = json.loads(profile_file.read(), strict=False)
+        with open(self.profile_file, 'r+') as profile_file:
+            try:
+                contents = profile_file.read()
+                print(contents)
+                data = json.loads(contents, strict=False)
                 self.database = data
                 if 'profile' in self.database and 'settings' in self.database:
                     profile_file.close()
                     return
-        except (IOError, ValueError):
-            self.database = {}
-            self._init_profile()
-            self._save_profile_to_file()
+            except (IOError, ValueError, JSONDecodeError) as e:
+                self.database = {}
+                self._init_profile()
+                self._save_profile_to_file()
 
     def _get_settings_for_lesson(self, lesson, lesson_name=None):
         """
@@ -98,13 +105,13 @@ class JenniferBrain(object):
         :return:
         """
         if not lesson_name:
-            lesson_name = unicode(lesson.settings_name)
+            lesson_name = str(lesson.settings_name)
 
         try:
             return self.database['settings'][lesson_name]
         except KeyError:
             if self._test_if_settings_template_exists(lesson):
-                print "--------{} SETTINGS--------".format(lesson_name)
+                print(f'--------{lesson_name} SETTINGS--------')
                 self._add_lesson_to_settings_and_write(lesson)
                 return self._get_settings_for_lesson(lesson)
             return {}
@@ -125,12 +132,14 @@ class JenniferBrain(object):
             try:
                 # Try to load initial template
                 settings_template_dict = json.loads(template.read(), strict=False)
+                print('calling initialize_settings on', lesson, lesson.initialize_settings)
                 settings_template_dict = lesson.initialize_settings(settings_template_dict)
 
                 # Push to DB & save
                 self.database['settings'][lesson_settings_name] = settings_template_dict
                 self._save_profile_to_file()
-            except ValueError:
+            except ValueError as e:
+                print(e)
                 exit("{} has an invalid settings_template.json".format(lesson_settings_name))
 
     def _save_profile_to_file(self):
@@ -156,27 +165,27 @@ class JenniferBrain(object):
         if 'profile' not in self.database:
             for field in fields:
                 self.database.update({'profile': {'location':{}}})
-                print "What is your {}?".format(field[0])
-                self.database['profile'][field[1]] = raw_input("> ")
+                print(f'What is your {field[0]}?')
+                self.database['profile'][field[1]] = input("> ")
 
             self.database['profile']['location'] = {}
             for field in location_fields:
-                txt = "What is your {}?".format(field[0])
+                txt =(f'What is your {field[0]}?')
 
-                if len(location_fields) >= 3:
+                if len(field) >= 3:
                     txt += " example: ({})".format(field[2])
 
-                print txt
-                self.database['profile']['location'][field[1]] = raw_input("> ")
+                print(txt)
+                self.database['profile']['location'][field[1]] = input("> ")
 
             while True:
-                print "What is your timezone? example: ({})".format(random.choice(common_timezones))
-                tz = raw_input('> ')
+                print(f'What is your timezone? example: ({random.choice(common_timezones)})')
+                tz = input('> ')
                 if timezone(tz):
                     self.database['profile']['location']['timezone'] = tz
                     break
                 else:
-                    print "Invalid timezone"
+                    print("Invalid timezone")
 
         if 'settings' not in self.database:
             self.database.update({'settings': {'notifications': {'quiet_hours': []}}})
@@ -193,7 +202,7 @@ class JenniferBrain(object):
         """
         text_input = text_input.lower()
         tokens = nltk.word_tokenize(text_input)
-        tags = nltk.tag._pos_tag(tokens, self.tagset, self.nltktagger)
+        tags = nltk.tag._pos_tag(tokens, self.tagset, self.nltktagger, lang='eng')
 
         # TODO: extrap this out to a custom stopwords
         try:

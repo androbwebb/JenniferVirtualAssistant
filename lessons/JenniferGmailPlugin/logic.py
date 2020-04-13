@@ -72,13 +72,13 @@ class GmailImapWrapper(object):
 
         # Login without readonly for this
         self.login_and_select(readonly=False)
-        self.imap.uid('store', unicode(message_uid), '+FLAGS', '\Seen')
+        self.imap.uid('store', message_uid, '+FLAGS', '\Seen')
         self.logout_and_close()
 
     def delete_message(self, message_uid):
         # Login without readonly for this
         self.login_and_select(readonly=False)
-        self.imap.uid('store', unicode(message_uid), '+FLAGS', '\Deleted')
+        self.imap.uid('store', message_uid, '+FLAGS', '\Deleted')
         self.imap.expunge()
         self.logout_and_close()
 
